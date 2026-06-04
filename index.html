@@ -55,9 +55,9 @@
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      padding: 20px 64px;
+      padding: 12px 64px;
       display: flex; justify-content: space-between; align-items: center;
-      min-height: 80px;
+      min-height: 88px;
       transition: background var(--t-slow), backdrop-filter var(--t-slow);
     }
     nav.scrolled {
@@ -66,7 +66,7 @@
       border-bottom: 1px solid var(--glass-border);
     }
     .nav-logo { text-decoration: none; display: flex; align-items: center; }
-    .nav-logo-img { height: 40px; width: auto; display: block; }
+    .nav-logo-img { height: 66px; width: auto; display: block; }
     .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; white-space: nowrap; }
     .nav-links a {
       color: rgba(255,255,255,0.75); text-decoration: none;
@@ -231,10 +231,10 @@
 
     /* ── STATS STRIP ── */
     .stats-strip { background: linear-gradient(135deg, var(--red-deep) 0%, var(--burgundy) 100%); padding: 36px 24px; }
-    .stats-inner { max-width: 880px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr; gap: 0; }
+    .stats-inner { max-width: 720px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0; }
     .stat-item { text-align: center; padding: 8px 16px; transition: transform var(--t-med); }
     @media (hover: hover) and (pointer: fine) {
-      .stat-item:hover { transform: translateY(-4px); }
+      .stat-item.zoom-in:hover { transform: translateY(-4px); }
     }
     .stat-item h3 { font-family: var(--font-heading); font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 800; color: var(--white); margin-bottom: 4px; letter-spacing: 0; }
     .stat-item p { font-size: 0.82rem; letter-spacing: 0; color: rgba(255,255,255,0.72); }
@@ -368,7 +368,7 @@
     .cd-num { font-family: var(--font-heading); font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 6px; letter-spacing: 0; }
     .cd-unit { font-size: 0.7rem; letter-spacing: 0; color: rgba(255,255,255,0.38); }
 
-    .prize-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+    .prize-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 28px; }
     .prize-item { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 20px; text-align: center; }
     .prize-item svg { width: 26px; height: 26px; margin-bottom: 10px; stroke: var(--red); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
     .prize-item h4 { font-size: 0.85rem; font-weight: 600; color: var(--white); margin-bottom: 4px; letter-spacing: 0; }
@@ -398,7 +398,8 @@
       transition: transform var(--t-med), border-color var(--t-med), box-shadow var(--t-med);
     }
     .how-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--red-deep),var(--red),var(--burgundy-light)); }
-    .how-card:hover { transform: translateY(-4px); border-color: rgba(192,57,43,0.38); box-shadow: 0 16px 48px rgba(139,0,0,0.22); }
+    .how-card.zoom-in:hover { transform: translateY(-4px); border-color: rgba(192,57,43,0.38); box-shadow: 0 16px 48px rgba(139,0,0,0.22); }
+    .how-card:hover { border-color: rgba(192,57,43,0.38); box-shadow: 0 16px 48px rgba(139,0,0,0.22); }
     .how-step-num {
       width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 16px;
       background: linear-gradient(135deg, var(--red-deep), var(--burgundy));
@@ -509,16 +510,7 @@
     .footer-in { max-width: 1200px; margin: 0 auto; }
     .footer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 24px; }
     .footer-logo { text-decoration: none; display: flex; align-items: center; }
-    .footer-logo-img { height: 48px; width: auto; display: block; }
-    .footer-social { display: flex; gap: 10px; }
-    .social-btn {
-      width: 44px; height: 44px; border-radius: var(--radius-sm);
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none; transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-med);
-    }
-    .social-btn:hover { background: rgba(192,57,43,0.18); border-color: rgba(192,57,43,0.38); transform: translateY(-2px); }
-    .social-btn svg { width: 17px; height: 17px; stroke: rgba(255,255,255,0.65); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-logo-img { height: 80px; width: auto; display: block; }
     .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.32); }
     .footer-tag { font-family: var(--font-arabic); direction: rtl; font-size: 0.76rem; color: rgba(255,255,255,0.22); }
@@ -537,6 +529,15 @@
     .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:300ms; }
     .stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:400ms; }
 
+    /* ── SCROLL ZOOM (subtle premium scale-in for images & cards) ── */
+    /* Uses ONLY transform: scale() + opacity — no layout shift, GPU-composited */
+    .zoom-in {
+      opacity: 0; transform: scale(0.95);
+      transition: opacity 700ms ease-out, transform 700ms ease-out;
+      will-change: transform, opacity;
+    }
+    .zoom-in.visible { opacity: 1; transform: scale(1); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -549,7 +550,10 @@
       .section-pad { padding: 72px 20px; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      nav { padding: 16px 20px; min-height: 64px; }
+      nav { padding: 10px 20px; min-height: 72px; }
+      /* Enlarged but capped so it never overflows the header on phones */
+      .nav-logo-img { height: 56px; max-width: 60vw; }
+      .footer-logo-img { height: 64px; }
       .stats-inner { grid-template-columns: 1fr; }
       .stat-div { display: none; }
       .stat-item { padding: 16px; }
@@ -593,6 +597,7 @@
       /* New motion effects off too */
       .car-prize-badge { animation:none !important; }
       .car-stage:hover .car-stage-img { transform:none !important; }
+      .zoom-in { opacity:1 !important; transform:none !important; transition:none !important; }
       .btn::after, .btn-submit::after { opacity:0 !important; animation:none !important; }
       * { transition-duration:0.01ms !important; }
     }
@@ -681,21 +686,15 @@
 
 <!-- ═══════ STATS ═══════ -->
 <div class="stats-strip" id="stats">
-  <div class="stats-inner stagger">
-    <div class="stat-item">
+  <div class="stats-inner">
+    <div class="stat-item zoom-in">
       <h3 class="count-up" data-count="100" data-suffix="%">100%</h3>
       <p>חוקי ושקוף לחלוטין</p>
     </div>
     <div class="stat-div"></div>
-    <div class="stat-item">
+    <div class="stat-item zoom-in">
       <h3 class="count-up" data-count="50" data-prefix="₪">₪50</h3>
       <p>מחיר כרטיס</p>
-    </div>
-    <div class="stat-div"></div>
-    <div class="stat-item">
-      <!-- TODO: charity details pending -->
-      <h3>—</h3>
-      <p>תרומה לקהילה</p>
     </div>
   </div>
 </div>
@@ -717,7 +716,7 @@
       <!-- Photo card second in DOM → LEFT column in RTL grid -->
       <div class="profile-card reveal-l">
         <div class="profile-avatar">
-          <img src="images/adam.jpeg" alt="אדם עוסמאן" class="profile-photo">
+          <img src="images/adam.jpeg" alt="אדם עוסמאן" class="profile-photo zoom-in">
         </div>
         <div class="profile-info">
           <div class="profile-name">אדם עוסמאן</div>
@@ -747,7 +746,7 @@
 
         <!-- Car Stage — BMW image -->
         <div class="car-stage">
-          <img src="images/bmw.png" class="car-stage-img" alt="BMW 320 M3 Kit">
+          <img src="images/bmw.png" class="car-stage-img zoom-in" alt="BMW 320 M3 Kit">
           <div class="car-stage-overlay"></div>
           <div class="car-prize-badge">
             <div class="badge-label">הפרס הגדול</div>
@@ -795,12 +794,6 @@
               <h4>מחיר כרטיס</h4>
               <p>₪50 לכרטיס</p>
             </div>
-            <div class="prize-item">
-              <!-- TODO: charity details pending -->
-              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <h4>תרומה לקהילה</h4>
-              <p lang="ar" style="font-family:var(--font-arabic);font-size:0.72rem">دعم المجتمع</p>
-            </div>
           </div>
 
           <!-- Ticket price tag before CTAs -->
@@ -834,10 +827,10 @@
       <p class="section-title-ar" lang="ar">كيف يعمل السحب</p>
     </div>
 
-    <div class="how-grid stagger">
+    <div class="how-grid">
 
       <!-- Step 1 -->
-      <div class="how-card">
+      <div class="how-card zoom-in">
         <div class="how-step-num">1</div>
         <div class="how-card-icon">
           <svg viewBox="0 0 24 24">
@@ -852,7 +845,7 @@
       </div>
 
       <!-- Step 2 -->
-      <div class="how-card">
+      <div class="how-card zoom-in">
         <div class="how-step-num">2</div>
         <div class="how-card-icon">
           <svg viewBox="0 0 24 24">
@@ -867,7 +860,7 @@
       </div>
 
       <!-- Step 3 -->
-      <div class="how-card">
+      <div class="how-card zoom-in">
         <div class="how-step-num">3</div>
         <div class="how-card-icon">
           <svg viewBox="0 0 24 24">
@@ -900,7 +893,7 @@
     </div>
 
     <div class="form-wrap reveal">
-      <form class="luxury-form" id="raffleForm" novalidate>
+      <form class="luxury-form zoom-in" id="raffleForm" novalidate>
 
         <!-- Ticket price inside form -->
         <div class="form-price-banner">
@@ -943,14 +936,9 @@
       <!-- Trust placeholders strip -->
       <!-- TODO: raffle end date -->
       <!-- TODO: legal raffle permit info -->
-      <!-- TODO: charity details — client to confirm % and cause -->
       <div class="trust-strip">
         <div class="trust-strip-title">מידע חשוב — יעודכן בקרוב</div>
         <div class="trust-items">
-          <div class="trust-item">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span class="trust-placeholder">פרטי הצדקה — יאושרו בקרוב</span>
-          </div>
           <div class="trust-item">
             <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             <span class="trust-placeholder">תאריך סגירת ההגרלה — יקבע בקרוב</span>
@@ -1008,20 +996,6 @@
       <a href="#hero" class="footer-logo">
         <img src="images/logo.jpeg" alt="Faltee | فلته" class="footer-logo-img">
       </a>
-      <div class="footer-social">
-        <a href="#" class="social-btn" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a href="#" class="social-btn" aria-label="TikTok">
-          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.2 8.2 0 004.8 1.53V6.77a4.85 4.85 0 01-1.03-.08z"/></svg>
-        </a>
-        <a href="#" class="social-btn" aria-label="WhatsApp">
-          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-        </a>
-        <a href="#" class="social-btn" aria-label="Facebook">
-          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-        </a>
-      </div>
     </div>
 
     <div class="footer-bottom">
@@ -1057,6 +1031,19 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
     revEls.forEach(el => obs.observe(el));
+  })();
+
+  // Scroll zoom — subtle scale(0.95→1) + fade-in for images & cards.
+  // Triggers once at ~20% visibility. CSS handles prefers-reduced-motion.
+  (() => {
+    const zoomEls = document.querySelectorAll('.zoom-in');
+    if (!zoomEls.length) return;
+    const zObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); zObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.2 });
+    zoomEls.forEach(el => zObs.observe(el));
   })();
 
   // Count-up stat numbers — animate 0 → target once, when scrolled into view.
