@@ -83,9 +83,10 @@
     .hamburger { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; background: none; border: none; width: 44px; height: 44px; padding: 0; margin-right: -10px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: transform var(--t-med), opacity var(--t-med); }
 
-    /* Mobile nav */
+    /* Mobile nav — z-index ABOVE the fixed nav (1000) so the overlay,
+       its close button and backdrop receive taps (was 999 → blocked by nav) */
     .mobile-nav {
-      display: none; position: fixed; inset: 0; z-index: 999;
+      display: none; position: fixed; inset: 0; z-index: 1100;
       background: rgba(10,10,10,0.97); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       flex-direction: column; align-items: center; justify-content: center; gap: 40px;
     }
@@ -95,12 +96,16 @@
       color: var(--white); text-decoration: none; transition: color var(--t-fast);
     }
     .mobile-nav a:hover { color: var(--red); }
+    /* Visible close (X) button, top-right for RTL, with a subtle glass circle */
     .mobile-nav-close {
-      position: absolute; top: 18px; left: 18px;
-      width: 44px; height: 44px;
+      position: absolute; top: 20px; right: 20px;
+      width: 48px; height: 48px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      background: none; border: none; color: var(--white); cursor: pointer; padding: 0;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      color: var(--white); cursor: pointer; padding: 0;
+      transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-med);
     }
+    .mobile-nav-close:hover { background: rgba(192,57,43,0.18); border-color: rgba(192,57,43,0.38); transform: rotate(90deg); }
 
     /* ── HERO ── */
     #hero {
@@ -549,7 +554,9 @@
     @media (max-width: 768px) {
       .section-pad { padding: 72px 20px; }
       .nav-links { display: none; }
-      .hamburger { display: flex; }
+      /* order:-1 → first flex item, which in RTL sits at the RIGHT edge.
+         Logo (order 0) drops to the left. */
+      .hamburger { display: flex; order: -1; margin-right: 0; }
       nav { padding: 10px 20px; min-height: 72px; }
       /* Enlarged but capped so it never overflows the header on phones */
       .nav-logo-img { height: 56px; max-width: 60vw; }
@@ -627,11 +634,11 @@
   <button class="mobile-nav-close" id="mobileClose" aria-label="סגור תפריט">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
-  <a href="#about"        onclick="closeMob()">אודות</a>
   <a href="#raffle"       onclick="closeMob()">הגרלה</a>
   <a href="#how-it-works" onclick="closeMob()">איך זה עובד</a>
   <a href="#tickets"      onclick="closeMob()">כרטיסים</a>
   <a href="#contact"      onclick="closeMob()">צור קשר</a>
+  <a href="#about"        onclick="closeMob()">אודות</a>
 </div>
 
 <!-- ═══════ HERO ═══════ -->
@@ -1021,7 +1028,10 @@
   const mobileNav = document.getElementById('mobileNav');
   hamburger.addEventListener('click', () => { mobileNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
   document.getElementById('mobileClose').addEventListener('click', closeMob);
+  // Tap on the backdrop (the overlay itself, not a link/button) closes the menu
   mobileNav.addEventListener('click', e => { if (e.target === mobileNav) closeMob(); });
+  // Escape key also closes
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMob(); });
   function closeMob() { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }
 
   // Scroll reveal
@@ -1034,15 +1044,21 @@
   })();
 
   // Scroll zoom — subtle scale(0.95→1) + fade-in for images & cards.
-  // Triggers once at ~20% visibility. CSS handles prefers-reduced-motion.
+  // Triggers once as each element scrolls into view. CSS handles prefers-reduced-motion.
+  // NOTE: a fixed threshold like 0.2 fails on mobile — elements taller than the
+  // viewport can never reach 20% intersection ratio, so they'd never animate.
+  // Using a tiny threshold + a negative bottom rootMargin fires reliably on every
+  // screen size, ~when the element is meaningfully on-screen.
   (() => {
     const zoomEls = document.querySelectorAll('.zoom-in');
     if (!zoomEls.length) return;
+    const reveal = el => el.classList.add('visible');
+    if (!('IntersectionObserver' in window)) { zoomEls.forEach(reveal); return; }
     const zObs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); zObs.unobserve(e.target); }
+        if (e.isIntersecting) { reveal(e.target); zObs.unobserve(e.target); }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.01, rootMargin: '0px 0px -12% 0px' });
     zoomEls.forEach(el => zObs.observe(el));
   })();
 
