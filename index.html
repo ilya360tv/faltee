@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פלתי | فلته — עידן חדש של השקעה ותגמולים</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;800;900&family=Heebo:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Global accessibility widget -->
+  <link rel="stylesheet" href="a11y.css">
+  <style>
+    :root {
+      --red: #C0392B;
+      --red-deep: #8B0000;
+      --burgundy: #6D0F0F;
+      --burgundy-light: #922B21;
+      --black: #0A0A0A;
+      --black-2: #111111;
+      --black-3: #1A1A1A;
+      --white: #FFFFFF;
+      --gray-light: #F5F5F5;
+      --font-heading: 'Frank Ruhl Libre', Georgia, serif;
+      --font-body: 'Heebo', system-ui, sans-serif;
+      --font-arabic: 'Noto Sans Arabic', Arial, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --shadow-glow: 0 0 40px rgba(192,57,43,0.35);
+      --shadow-card: 0 24px 64px rgba(0,0,0,0.5);
+      --glass-bg: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.09);
+      --glass-red: rgba(192,57,43,0.14);
+      --t-fast: 150ms ease-out;
+      --t-med: 250ms ease-out;
+      --t-slow: 400ms ease-out;
+    }
+
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+      direction: rtl;
+    }
+
+    .ar { font-family: var(--font-arabic); direction: rtl; text-align: right; }
+    .section-pad { padding: 96px 24px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 20px 64px;
+      display: flex; justify-content: space-between; align-items: center;
+      min-height: 80px;
+      transition: background var(--t-slow), backdrop-filter var(--t-slow);
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo-img { height: 40px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; white-space: nowrap; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75); text-decoration: none;
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0;
+      transition: color var(--t-fast);
+    }
+    .nav-links a:hover { color: var(--red); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--red), var(--red-deep)) !important;
+      color: var(--white) !important; padding: 11px 26px; border-radius: var(--radius-sm);
+      transition: transform var(--t-med), box-shadow var(--t-med) !important;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-glow) !important; }
+    .hamburger { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; background: none; border: none; width: 44px; height: 44px; padding: 0; margin-right: -10px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: transform var(--t-med), opacity var(--t-med); }
+
+    /* Mobile nav */
+    .mobile-nav {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(10,10,10,0.97); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 40px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: var(--font-heading); font-size: 2rem; font-weight: 700;
+      color: var(--white); text-decoration: none; transition: color var(--t-fast);
+    }
+    .mobile-nav a:hover { color: var(--red); }
+    .mobile-nav-close {
+      position: absolute; top: 18px; left: 18px;
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none; color: var(--white); cursor: pointer; padding: 0;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    /* Separate layer for zoom-able image */
+    .hero-img-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+    .hero-img {
+      position: absolute; inset: -5%; width: 110%; height: 110%;
+      background: url('images/bmw.png') center / cover no-repeat;
+      animation: heroZoom 14s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+    /* Dark gradient overlay — separate from the image so zoom doesn't affect it */
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(160deg, rgba(10,10,10,0.80) 0%, rgba(26,5,5,0.75) 45%, rgba(15,0,0,0.76) 75%, rgba(10,10,10,0.84) 100%);
+    }
+    .hero-orb {
+      position: absolute; border-radius: 50%; pointer-events: none; z-index: 2;
+      background: radial-gradient(circle, rgba(139,0,0,0.14) 0%, transparent 70%);
+    }
+    .hero-orb-1 { top: -120px; right: -120px; width: 640px; height: 640px; }
+    .hero-orb-2 { bottom: -160px; left: -80px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(192,57,43,0.09) 0%, transparent 70%); }
+    .hero-line {
+      position: absolute; left: -10%; width: 120%; height: 1px; pointer-events: none; z-index: 2;
+      background: linear-gradient(90deg, transparent, rgba(192,57,43,0.25), transparent);
+    }
+    .hero-line-1 { top: 22%; transform: rotate(-4deg); }
+    .hero-line-2 { bottom: 28%; transform: rotate(-4deg); opacity: 0.6; }
+    /* Animated glow behind headline */
+    .hero-glow {
+      position: absolute; z-index: 4; top: 28%; left: 50%;
+      transform: translateX(-50%);
+      width: 680px; height: 320px;
+      background: radial-gradient(ellipse at center, rgba(192,57,43,0.20) 0%, transparent 68%);
+      pointer-events: none;
+      animation: glowPulse 4.5s ease-in-out infinite;
+    }
+    @keyframes glowPulse { 0%,100%{opacity:0.55} 50%{opacity:1} }
+
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center; padding: 130px 24px 80px; max-width: 920px;
+    }
+
+    /* Hero load-in stagger — each element fades up on page load */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-badge    { animation: fadeUp 0.75s ease-out 0.10s both; }
+    .hero-title-he { animation: fadeUp 0.75s ease-out 0.30s both; }
+    .hero-title-ar { animation: fadeUp 0.75s ease-out 0.48s both; }
+    .hero-desc-he  { animation: fadeUp 0.75s ease-out 0.62s both; }
+    .hero-desc-ar  { animation: fadeUp 0.75s ease-out 0.72s both; }
+    .hero-ctas     { animation: fadeUp 0.75s ease-out 0.86s both; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 20px; margin-bottom: 36px;
+      background: var(--glass-red); border: 1px solid rgba(192,57,43,0.4);
+      border-radius: 100px; font-size: 0.78rem; letter-spacing: 0;
+      color: rgba(255,255,255,0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    }
+    .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulsedot 2s ease-in-out infinite; flex-shrink: 0; }
+    @keyframes pulsedot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.6)} }
+
+    .hero-title-he {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 5.5vw, 5rem);
+      font-weight: 800; line-height: 1.2; letter-spacing: 0; color: var(--white); margin-bottom: 14px;
+    }
+    .hero-title-he .hl {
+      background: linear-gradient(135deg, #E74C3C 0%, var(--red) 40%, var(--burgundy-light) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-title-ar {
+      font-family: var(--font-arabic); direction: rtl;
+      font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 600; line-height: 1.5;
+      color: rgba(255,255,255,0.58); margin-bottom: 44px;
+    }
+    .hero-desc-he { font-size: clamp(0.95rem, 1.4vw, 1.15rem); font-weight: 300; color: rgba(255,255,255,0.62); max-width: 560px; margin: 0 auto 10px; line-height: 1.8; }
+    .hero-desc-ar { font-family: var(--font-arabic); direction: rtl; font-size: clamp(0.85rem, 1.2vw, 1rem); font-weight: 400; color: rgba(255,255,255,0.42); max-width: 560px; margin: 0 auto 52px; line-height: 2; }
+    .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* Animated chevron scroll indicator */
+    .hero-chevron {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+      cursor: pointer; background: none; border: none; padding: 8px;
+    }
+    .hero-chevron svg {
+      width: 30px; height: 30px;
+      stroke: rgba(255,255,255,0.45); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      animation: chevBounce 1.9s ease-in-out infinite;
+      display: block;
+    }
+    .hero-chevron svg:last-child { margin-top: -12px; opacity: 0.3; animation-delay: 0.18s; }
+    @keyframes chevBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(7px)} }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 44px;
+      padding: 15px 34px; border-radius: var(--radius-sm);
+      font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; letter-spacing: 0;
+      cursor: pointer; border: none; text-decoration: none;
+      transition: transform var(--t-med), box-shadow var(--t-med);
+      position: relative; overflow: hidden;
+    }
+    /* Diagonal light sweep — animates transform only (GPU-friendly) */
+    .btn::after {
+      content:''; position:absolute; top:0; left:0; width:45%; height:100%;
+      background: linear-gradient(100deg, transparent, rgba(255,255,255,0.22), transparent);
+      transform: translateX(-220%) skewX(-18deg); opacity:0; pointer-events:none;
+    }
+    .btn:hover::after { animation: btnSweep 0.9s ease-out forwards; }
+    @keyframes btnSweep {
+      0%   { transform: translateX(-220%) skewX(-18deg); opacity:1; }
+      100% { transform: translateX(360%)  skewX(-18deg); opacity:0; }
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--red) 0%, var(--red-deep) 100%); color: var(--white); box-shadow: 0 4px 22px rgba(192,57,43,0.42); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 44px rgba(192,57,43,0.65); }
+    .btn-primary:active { transform: translateY(0) scale(0.985); }
+    .btn-ghost { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.22); backdrop-filter: blur(8px); }
+    .btn-ghost:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.5); box-shadow: 0 8px 32px rgba(255,255,255,0.08); }
+    .btn-ghost:active { transform: translateY(0) scale(0.985); }
+
+    /* ── STATS STRIP ── */
+    .stats-strip { background: linear-gradient(135deg, var(--red-deep) 0%, var(--burgundy) 100%); padding: 36px 24px; }
+    .stats-inner { max-width: 880px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr; gap: 0; }
+    .stat-item { text-align: center; padding: 8px 16px; transition: transform var(--t-med); }
+    @media (hover: hover) and (pointer: fine) {
+      .stat-item:hover { transform: translateY(-4px); }
+    }
+    .stat-item h3 { font-family: var(--font-heading); font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 800; color: var(--white); margin-bottom: 4px; letter-spacing: 0; }
+    .stat-item p { font-size: 0.82rem; letter-spacing: 0; color: rgba(255,255,255,0.72); }
+    .stat-div { background: rgba(255,255,255,0.18); }
+
+    /* ── SECTION COMMON ── */
+    .section-label { display: block; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--red); margin-bottom: 14px; }
+    .section-title { font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 800; line-height: 1.25; color: var(--white); letter-spacing: 0; }
+    .section-title-ar { font-family: var(--font-arabic); direction: rtl; font-size: clamp(1.1rem, 2vw, 1.7rem); color: rgba(255,255,255,0.45); margin-top: 10px; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .luxury-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(192,57,43,0.35), transparent); }
+
+    /* ── ABOUT ── */
+    #about { background: var(--black-2); position: relative; overflow: hidden; }
+    #about::before { content:''; position:absolute; top:-200px; right:-200px; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(139,0,0,0.07) 0%,transparent 70%); pointer-events:none; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+
+    .profile-card {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      position: relative; overflow: hidden;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.45), 0 0 60px rgba(139,0,0,0.08);
+    }
+    .profile-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; z-index:1; background:linear-gradient(90deg,var(--red-deep),var(--red),var(--burgundy-light)); }
+    /* Portrait photo frame — full card width, 4:5 aspect ratio */
+    .profile-avatar {
+      width: 100%;
+      background: linear-gradient(135deg, var(--red-deep), var(--burgundy));
+      overflow: hidden; display: block;
+    }
+    /* height: auto lets the image set its own height at natural aspect ratio — no cropping */
+    .profile-photo { width: 100%; height: auto; display: block; }
+    /* Info strip below the photo */
+    .profile-info { padding: 22px 28px 28px; }
+    .profile-name { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: 0; }
+    .profile-role { font-size: 0.82rem; letter-spacing: 0; color: var(--red); margin-bottom: 22px; }
+    .profile-divider { width: 48px; height: 3px; background: linear-gradient(90deg, var(--red), var(--red-deep)); border-radius: 2px; margin-bottom: 20px; }
+    .profile-meta { font-size: 0.9rem; color: rgba(255,255,255,0.50); margin-bottom: 20px; }
+    .profile-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .tag { padding: 6px 13px; background: rgba(192,57,43,0.14); border: 1px solid rgba(192,57,43,0.28); border-radius: 100px; font-size: 0.75rem; color: rgba(255,255,255,0.78); }
+
+    .about-text .section-label { margin-bottom: 14px; }
+    .about-text h2 { font-family: var(--font-heading); font-size: clamp(1.8rem, 2.8vw, 2.7rem); font-weight: 800; line-height: 1.3; color: var(--white); margin-bottom: 24px; letter-spacing: 0; }
+    .about-text p { font-size: 0.97rem; line-height: 1.9; color: rgba(255,255,255,0.62); margin-bottom: 16px; }
+    .about-text .ar-quote { font-family: var(--font-arabic); direction: rtl; text-align: right; font-size: 0.92rem; line-height: 2.1; color: rgba(255,255,255,0.45); border-right: 2px solid rgba(192,57,43,0.38); padding-right: 16px; margin-top: 8px; }
+
+    /* ── RAFFLE ── */
+    #raffle { background: var(--black); position: relative; overflow: hidden; }
+
+    .raffle-card {
+      max-width: 980px; margin: 0 auto;
+      background: var(--black-3); border-radius: var(--radius-xl);
+      border: 1px solid rgba(192,57,43,0.22);
+      box-shadow: var(--shadow-card), 0 0 100px rgba(139,0,0,0.12);
+      position: relative; overflow: hidden;
+    }
+    .raffle-card::after {
+      content:''; position:absolute; inset:-1px; border-radius:var(--radius-xl);
+      background: conic-gradient(from 0deg, transparent 0deg, rgba(192,57,43,0.55) 60deg, transparent 120deg, transparent 360deg);
+      z-index:0; animation: rotateglow 5s linear infinite; opacity:0.45;
+    }
+    @keyframes rotateglow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .raffle-card-inner { position: relative; z-index: 2; }
+
+    .car-stage {
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at 50% 38%, #1d1d1d 0%, var(--black-3) 74%);
+      padding: 32px 32px 36px;
+    }
+    /* Car photo is the centerpiece: full image visible (contain → no cropping),
+       brightly shown, framed with rounded corners + soft shadow */
+    .car-stage-img {
+      display: block;
+      width: 100%; max-width: 760px; height: auto;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.05);
+      transform: scale(1);
+      transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    /* Gentle zoom on hover — desktop/fine-pointer only, no effect on touch */
+    @media (hover: hover) and (pointer: fine) {
+      .car-stage:hover .car-stage-img { transform: scale(1.04); }
+    }
+    /* Faint red ambiance only — does NOT dim the car */
+    .car-stage-overlay {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: radial-gradient(ellipse 70% 50% at 50% 92%, rgba(192,57,43,0.12) 0%, transparent 62%);
+    }
+    .car-prize-badge {
+      position: absolute; top: 24px; right: 28px; z-index: 2;
+      background: linear-gradient(135deg, var(--red), var(--red-deep));
+      padding: 12px 22px; border-radius: var(--radius-sm);
+      text-align: center;
+      animation: badgeGlow 3.6s ease-in-out infinite;
+    }
+    /* Soft breathing glow around the prize badge */
+    @keyframes badgeGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(192,57,43,0.30); }
+      50%      { box-shadow: 0 0 42px rgba(192,57,43,0.62); }
+    }
+    .car-prize-badge .badge-label { font-size: 0.65rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.7); }
+    .car-prize-badge .badge-value { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 700; color: var(--white); letter-spacing: 0; }
+
+    .raffle-body { padding: 40px 44px; }
+    .raffle-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; flex-wrap: wrap; gap: 14px; }
+    .raffle-car-name { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: var(--white); letter-spacing: 0; }
+    .raffle-car-name-ar { font-family: var(--font-arabic); direction: rtl; font-size: 1.05rem; color: rgba(255,255,255,0.45); margin-top: 4px; }
+    .raffle-live {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px; background: rgba(139,0,0,0.22); border: 1px solid rgba(192,57,43,0.48); border-radius: 100px;
+      font-size: 0.82rem; color: rgba(255,195,175,0.92); white-space: nowrap;
+    }
+    .raffle-live::before { content:''; width:8px; height:8px; flex-shrink:0; border-radius:50%; background:var(--red); animation:pulsedot 2s ease-in-out infinite; }
+
+    /* Urgency banner above countdown */
+    .urgency-banner {
+      background: linear-gradient(135deg, rgba(139,0,0,0.38), rgba(192,57,43,0.22));
+      border: 1px solid rgba(192,57,43,0.42);
+      border-radius: var(--radius-md);
+      padding: 14px 20px; margin-bottom: 18px; text-align: center;
+    }
+    .urgency-banner .urg-he { font-size: 0.95rem; font-weight: 700; color: rgba(255,255,255,0.92); margin-bottom: 4px; }
+    .urgency-banner .urg-ar { font-family: var(--font-arabic); direction: rtl; font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+
+    .countdown-label-row { font-size: 0.72rem; letter-spacing: 0.06em; color: rgba(255,255,255,0.38); margin-bottom: 12px; }
+    .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 36px; }
+    .cd-item { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 20px 12px; text-align: center; }
+    .cd-num { font-family: var(--font-heading); font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 6px; letter-spacing: 0; }
+    .cd-unit { font-size: 0.7rem; letter-spacing: 0; color: rgba(255,255,255,0.38); }
+
+    .prize-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+    .prize-item { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 20px; text-align: center; }
+    .prize-item svg { width: 26px; height: 26px; margin-bottom: 10px; stroke: var(--red); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .prize-item h4 { font-size: 0.85rem; font-weight: 600; color: var(--white); margin-bottom: 4px; letter-spacing: 0; }
+    .prize-item p { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+
+    /* Price tag near CTAs */
+    .price-tag-inline {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(192,57,43,0.16); border: 1px solid rgba(192,57,43,0.38);
+      border-radius: var(--radius-sm); padding: 10px 18px; margin-bottom: 20px;
+    }
+    .price-tag-inline .pt-he { font-size: 1.05rem; font-weight: 700; color: var(--white); }
+    .price-tag-inline .pt-ar { font-family: var(--font-arabic); font-size: 0.9rem; color: rgba(255,255,255,0.58); }
+    .raffle-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* ── HOW IT WORKS ── */
+    #how-it-works { background: var(--black-2); }
+    .how-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      max-width: 960px; margin: 0 auto;
+    }
+    .how-card {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl); padding: 40px 28px; text-align: center;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      position: relative; overflow: hidden;
+      transition: transform var(--t-med), border-color var(--t-med), box-shadow var(--t-med);
+    }
+    .how-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--red-deep),var(--red),var(--burgundy-light)); }
+    .how-card:hover { transform: translateY(-4px); border-color: rgba(192,57,43,0.38); box-shadow: 0 16px 48px rgba(139,0,0,0.22); }
+    .how-step-num {
+      width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--red-deep), var(--burgundy));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--white);
+      box-shadow: 0 4px 16px rgba(139,0,0,0.4);
+    }
+    .how-card-icon { margin-bottom: 14px; }
+    .how-card-icon svg { width: 34px; height: 34px; stroke: var(--red); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .how-card h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: 0; }
+    .how-card .hc-ar { font-family: var(--font-arabic); direction: rtl; font-size: 0.9rem; color: rgba(255,255,255,0.48); margin-bottom: 14px; }
+    .how-card .hc-detail-he { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.65; margin-bottom: 4px; }
+    .how-card .hc-detail-ar { font-family: var(--font-arabic); direction: rtl; font-size: 0.78rem; color: rgba(255,255,255,0.33); line-height: 1.7; }
+
+    /* ── FORM ── */
+    #tickets { background: linear-gradient(180deg, var(--black-2) 0%, var(--black) 100%); }
+    .form-wrap { max-width: 660px; margin: 0 auto; }
+    .luxury-form {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl); padding: 56px 52px;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); position: relative; overflow: hidden;
+    }
+    .luxury-form::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--red-deep),var(--red),var(--burgundy-light)); }
+    /* Ticket price banner inside form */
+    .form-price-banner {
+      background: linear-gradient(135deg, rgba(139,0,0,0.32), rgba(192,57,43,0.18));
+      border: 1px solid rgba(192,57,43,0.35); border-radius: var(--radius-md);
+      padding: 12px 20px; margin-bottom: 28px; text-align: center;
+    }
+    .form-price-banner .fpb-he { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+    .form-price-banner .fpb-ar { font-family: var(--font-arabic); direction: rtl; font-size: 0.9rem; color: rgba(255,255,255,0.55); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .form-group { margin-bottom: 22px; }
+    .form-label { display: block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0; color: rgba(255,255,255,0.55); margin-bottom: 10px; text-align: right; }
+    .form-input {
+      width: 100%; padding: 15px 18px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11);
+      border-radius: var(--radius-sm); color: var(--white);
+      font-family: var(--font-body); font-size: 0.97rem; outline: none;
+      transition: border-color var(--t-fast), box-shadow var(--t-fast);
+      text-align: right; direction: rtl;
+    }
+    .form-input[type="email"],
+    .form-input[type="tel"] { direction: ltr; text-align: left; }
+    .form-input::placeholder { color: rgba(255,255,255,0.28); }
+    .form-input:focus { border-color: rgba(192,57,43,0.55); box-shadow: 0 0 0 3px rgba(192,57,43,0.11); }
+    .btn-submit {
+      width: 100%; padding: 20px;
+      background: linear-gradient(135deg, var(--red), var(--red-deep));
+      color: var(--white); border: none; border-radius: var(--radius-sm);
+      font-family: var(--font-body); font-size: 1rem; font-weight: 700; letter-spacing: 0;
+      cursor: pointer; margin-top: 6px;
+      transition: transform var(--t-med), box-shadow var(--t-med);
+      box-shadow: 0 4px 28px rgba(192,57,43,0.42); position: relative; overflow: hidden;
+    }
+    .btn-submit::after {
+      content:''; position:absolute; top:0; left:0; width:45%; height:100%;
+      background: linear-gradient(100deg, transparent, rgba(255,255,255,0.20), transparent);
+      transform: translateX(-220%) skewX(-18deg); opacity:0; pointer-events:none;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 52px rgba(192,57,43,0.62); }
+    .btn-submit:hover::after { animation: btnSweep 0.9s ease-out forwards; }
+    .btn-submit:active { transform: translateY(0) scale(0.99); }
+    .form-note { text-align: center; font-size: 0.76rem; color: rgba(255,255,255,0.30); margin-top: 18px; line-height: 1.75; }
+
+    /* Trust strip below the form */
+    .trust-strip {
+      max-width: 660px; margin: 24px auto 0;
+      padding: 20px 28px;
+      background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.10);
+      border-radius: var(--radius-md);
+    }
+    .trust-strip-title { font-size: 0.68rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.28); margin-bottom: 14px; text-align: center; }
+    .trust-items { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .trust-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.73rem; color: rgba(255,255,255,0.38);
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.025); border: 1px dashed rgba(255,255,255,0.10); border-radius: 100px;
+    }
+    .trust-item svg { width: 13px; height: 13px; stroke: rgba(255,255,255,0.32); fill: none; stroke-width: 1.5; stroke-linecap: round; flex-shrink: 0; }
+    .trust-placeholder { font-style: italic; color: rgba(255,255,255,0.22); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--black-2); }
+    .contact-card {
+      max-width: 460px; margin: 0 auto;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl); padding: 52px 44px; text-align: center;
+    }
+    .contact-icon-wrap {
+      width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 12px;
+      background: rgba(192,57,43,0.13); border: 1px solid rgba(192,57,43,0.28);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-icon-wrap svg { width: 20px; height: 20px; stroke: var(--red); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .contact-lbl { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--red); margin-bottom: 6px; }
+    .contact-val { font-size: 1.08rem; color: var(--white); font-weight: 500; }
+    .contact-val a { color: inherit; text-decoration: none; direction: ltr; display: inline-block; transition: color var(--t-fast); }
+    .contact-val a:hover { color: var(--red); }
+    .c-div { width: 40px; height: 1px; background: rgba(255,255,255,0.09); margin: 22px auto; }
+    .contact-coming { opacity: 0.42; }
+    .contact-footnote { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07); font-size: 0.82rem; color: rgba(255,255,255,0.38); line-height: 1.85; }
+    .contact-footnote .ar-note { font-family: var(--font-arabic); direction: rtl; display: block; margin-top: 4px; font-size: 0.78rem; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.05); padding: 52px 40px 32px; }
+    .footer-in { max-width: 1200px; margin: 0 auto; }
+    .footer-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 24px; }
+    .footer-logo { text-decoration: none; display: flex; align-items: center; }
+    .footer-logo-img { height: 48px; width: auto; display: block; }
+    .footer-social { display: flex; gap: 10px; }
+    .social-btn {
+      width: 44px; height: 44px; border-radius: var(--radius-sm);
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-med);
+    }
+    .social-btn:hover { background: rgba(192,57,43,0.18); border-color: rgba(192,57,43,0.38); transform: translateY(-2px); }
+    .social-btn svg { width: 17px; height: 17px; stroke: rgba(255,255,255,0.65); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.32); }
+    .footer-tag { font-family: var(--font-arabic); direction: rtl; font-size: 0.76rem; color: rgba(255,255,255,0.22); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 600ms ease-out, transform 600ms ease-out; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-l { opacity: 0; transform: translateX(-30px); transition: opacity 600ms ease-out, transform 600ms ease-out; }
+    .reveal-l.visible { opacity: 1; transform: none; }
+    .reveal-r { opacity: 0; transform: translateX(30px); transition: opacity 600ms ease-out, transform 600ms ease-out; }
+    .reveal-r.visible { opacity: 1; transform: none; }
+    .stagger > * { opacity: 0; transform: translateY(18px); transition: opacity 500ms ease-out, transform 500ms ease-out; }
+    .stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0ms; }
+    .stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:100ms; }
+    .stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:200ms; }
+    .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:300ms; }
+    .stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:400ms; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      /* Restore natural order on mobile: photo on top, text below */
+      .about-grid .profile-card { order: 1; }
+      .about-grid .about-text    { order: 2; }
+      .how-grid { grid-template-columns: 1fr; max-width: 460px; }
+    }
+    @media (max-width: 768px) {
+      .section-pad { padding: 72px 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      nav { padding: 16px 20px; min-height: 64px; }
+      .stats-inner { grid-template-columns: 1fr; }
+      .stat-div { display: none; }
+      .stat-item { padding: 16px; }
+      .form-row { grid-template-columns: 1fr; }
+      .luxury-form { padding: 40px 26px; }
+      .raffle-body { padding: 28px 24px; }
+      .car-stage { padding: 20px 18px 24px; }
+      /* Gentler reveal on mobile: shorter rise, no sideways motion (avoids any
+         horizontal shift on small screens) */
+      .reveal, .reveal-l, .reveal-r { transform: translateY(20px); }
+      .countdown { grid-template-columns: repeat(2, 1fr); }
+      .prize-grid { grid-template-columns: 1fr 1fr; }
+      .raffle-btns { flex-direction: column; }
+      .raffle-btns .btn { justify-content: center; }
+      .footer-top { flex-direction: column; align-items: flex-start; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 320px; justify-content: center; }
+      .profile-info { padding: 18px 20px 22px; }
+      .prize-grid { grid-template-columns: 1fr; }
+      .contact-card { padding: 40px 24px; }
+      .how-card { padding: 28px 20px; }
+      /* Keep the prize badge compact so it never crowds the car photo */
+      .car-prize-badge { top: 14px; right: 14px; padding: 9px 14px; }
+      .car-prize-badge .badge-value { font-size: 1.05rem; }
+      /* Countdown stays a comfortable 2×2 on phones */
+      .countdown { gap: 10px; }
+      .cd-num { font-size: 1.65rem; }
+      .raffle-car-name { font-size: 1.6rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-img { animation: none; }
+      .hero-badge, .hero-title-he, .hero-title-ar, .hero-desc-he, .hero-desc-ar, .hero-ctas {
+        opacity: 1; animation: none;
+      }
+      .hero-glow, .hero-chevron svg { animation: none; }
+      .reveal,.reveal-l,.reveal-r,.stagger>* { opacity:1; transform:none; transition:none; }
+      .hero-badge-dot,.raffle-live::before,.raffle-card::after { animation:none; }
+      /* New motion effects off too */
+      .car-prize-badge { animation:none !important; }
+      .car-stage:hover .car-stage-img { transform:none !important; }
+      .btn::after, .btn-submit::after { opacity:0 !important; animation:none !important; }
+      * { transition-duration:0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img src="images/logo.jpeg" alt="Faltee | فلته" class="nav-logo-img">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">אודות</a></li>
+    <li><a href="#raffle">הגרלה</a></li>
+    <li><a href="#how-it-works">איך זה עובד</a></li>
+    <li><a href="#tickets">כרטיסים</a></li>
+    <li><a href="#contact">צור קשר</a></li>
+    <li><a href="#tickets" class="nav-cta">קנו כרטיס</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="פתח תפריט">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="תפריט ניווט">
+  <button class="mobile-nav-close" id="mobileClose" aria-label="סגור תפריט">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <a href="#about"        onclick="closeMob()">אודות</a>
+  <a href="#raffle"       onclick="closeMob()">הגרלה</a>
+  <a href="#how-it-works" onclick="closeMob()">איך זה עובד</a>
+  <a href="#tickets"      onclick="closeMob()">כרטיסים</a>
+  <a href="#contact"      onclick="closeMob()">צור קשר</a>
+</div>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <!-- Zoom-animated image layer -->
+  <div class="hero-img-wrap">
+    <div class="hero-img"></div>
+  </div>
+  <!-- Dark gradient overlay (separate so zoom doesn't affect it) -->
+  <div class="hero-bg"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-line hero-line-1"></div>
+  <div class="hero-line hero-line-2"></div>
+  <!-- Animated glow behind headline -->
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      פלטפורמת הגרלות יוקרה והשקעות
+    </div>
+
+    <h1 class="hero-title-he">
+      עידן חדש של<br>
+      <span class="hl">השקעה ותגמולים</span>
+    </h1>
+
+    <p class="hero-title-ar" lang="ar">عصر جديد من الاستثمار والمكافآت</p>
+
+    <p class="hero-desc-he">הגרלות יוקרה שיוצרות הזדמנויות ותורמות לקהילה.</p>
+    <p class="hero-desc-ar" lang="ar">سحوبات فاخرة تمنح الفرص وتساهم في العمل الخيري</p>
+
+    <div class="hero-ctas">
+      <a href="#tickets" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M9 12h6"/></svg>
+        קנו כרטיס הגרלה
+      </a>
+      <a href="#raffle" class="btn btn-ghost">
+        מידע נוסף
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Animated double-chevron scroll indicator -->
+  <button class="hero-chevron" aria-label="גלול למטה" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+</section>
+
+<!-- ═══════ STATS ═══════ -->
+<div class="stats-strip" id="stats">
+  <div class="stats-inner stagger">
+    <div class="stat-item">
+      <h3 class="count-up" data-count="100" data-suffix="%">100%</h3>
+      <p>חוקי ושקוף לחלוטין</p>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <h3 class="count-up" data-count="50" data-prefix="₪">₪50</h3>
+      <p>מחיר כרטיס</p>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <!-- TODO: charity details pending -->
+      <h3>—</h3>
+      <p>תרומה לקהילה</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about" class="section-pad">
+  <div class="container">
+    <div class="about-grid">
+
+      <!-- Text first in DOM → RIGHT column in RTL grid -->
+      <div class="about-text reveal-r">
+        <span class="section-label">על המייסד</span>
+        <h2>נבנה עם חזון.<br>מונע ממטרה.</h2>
+        <p>מייסד החברה הוא אדם עוסמאן, בן 23 מהיישוב אעבלין — כפר ערבי בגליל המערבי, הממוקם בין חיפה לעכו וידוע בקהילה חזקה, דו־קיום ואווירה משפחתית. אדם פועל מתוך חזון ליצור הזדמנויות אמיתיות לצעירים ולחזק את החברה הערבית דרך יוזמות עסקיות, חברתיות והשקעות עם ערך לקהילה.</p>
+        <p>כיום הוא לומד תחום הסייבר ומתלמד בעריכת דין בקריה האקדמית אונו, ובמקביל עוסק בתחומי כוח האדם, שלד ושיפוצים. מטרת החברה היא לקדם הצלחה, עצמאות כלכלית ועזרה הדדית — תוך שילוב בין עולם העסקים לבין נתינה והשפעה חיובית על הקהילה והעם הערבי כולו.</p>
+        <p class="ar-quote" lang="ar">مؤسس الشركة هو آدم عثمان، شاب يبلغ من العمر 23 عامًا من بلدة إعبلين، وهي قرية عربية تقع بين حيفا وعكا وتُعرف بأجوائها العائلية وروح التعايش والمجتمع القوي فيها. ينطلق آدم من رؤية تهدف إلى خلق فرص حقيقية للشباب ودعم المجتمع العربي من خلال مشاريع استثمارية ومبادرات تحمل قيمة وتأثيرًا إيجابيًا. يدرس حاليًا مجال السايبر، ويتدرّب في مجال المحاماة في الكلية الأكاديمية أونو، إلى جانب عمله في مجالات القوى العاملة، الهيكل والتشطيبات. وتهدف الشركة إلى دعم النجاح، الاستقلال الاقتصادي وروح التعاون، مع الدمج بين عالم الأعمال والعمل المجتمعي لخدمة المجتمع العربي وتطويره.</p>
+      </div>
+
+      <!-- Photo card second in DOM → LEFT column in RTL grid -->
+      <div class="profile-card reveal-l">
+        <div class="profile-avatar">
+          <img src="images/adam.jpeg" alt="אדם עוסמאן" class="profile-photo">
+        </div>
+        <div class="profile-info">
+          <div class="profile-name">אדם עוסמאן</div>
+          <div class="profile-role">מייסד &nbsp;·&nbsp; <span lang="ar" style="font-family:var(--font-arabic)">المؤسس</span></div>
+          <div class="profile-divider"></div>
+          <p class="profile-meta">בן 23 &nbsp;·&nbsp; אעבלין, גליל מערבי</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="luxury-divider"></div>
+
+<!-- ═══════ RAFFLE ═══════ -->
+<section id="raffle" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">הגרלה מיוחדת</span>
+      <h2 class="section-title">זכו בפרס הגדול</h2>
+      <p class="section-title-ar" lang="ar">اربح الجائزة الكبرى</p>
+    </div>
+
+    <div class="raffle-card reveal">
+      <div class="raffle-card-inner">
+
+        <!-- Car Stage — BMW image -->
+        <div class="car-stage">
+          <img src="images/bmw.png" class="car-stage-img" alt="BMW 320 M3 Kit">
+          <div class="car-stage-overlay"></div>
+          <div class="car-prize-badge">
+            <div class="badge-label">הפרס הגדול</div>
+            <div class="badge-value">BMW 320 M3 Kit</div>
+          </div>
+        </div>
+
+        <!-- Raffle Details -->
+        <div class="raffle-body">
+          <div class="raffle-head">
+            <div>
+              <div class="raffle-car-name">BMW 320 M3 Kit</div>
+              <div class="raffle-car-name-ar" lang="ar">بي إم دبليو 320</div>
+            </div>
+            <div class="raffle-live">פעיל עכשיו</div>
+          </div>
+
+          <!-- Urgency banner -->
+          <div class="urgency-banner">
+            <p class="urg-he">ההגרלה תיסגר בקרוב — אל תפספסו</p>
+            <p class="urg-ar" lang="ar">السحب سيُغلق قريبًا — لا تفوّت الفرصة</p>
+          </div>
+
+          <div class="countdown-label-row" id="cd-label">ההגרלה נסגרת בעוד</div>
+          <!-- shown when RAFFLE_END is set -->
+          <div class="countdown" id="cd-boxes">
+            <div class="cd-item"><div class="cd-num" id="cd-d">--</div><div class="cd-unit">ימים</div></div>
+            <div class="cd-item"><div class="cd-num" id="cd-h">--</div><div class="cd-unit">שעות</div></div>
+            <div class="cd-item"><div class="cd-num" id="cd-m">--</div><div class="cd-unit">דקות</div></div>
+            <div class="cd-item"><div class="cd-num" id="cd-s">--</div><div class="cd-unit">שניות</div></div>
+          </div>
+          <!-- shown when no date is set -->
+          <div id="cd-pending" style="display:none;text-align:center;padding:24px 0 32px;font-size:1.15rem;font-weight:600;color:rgba(255,255,255,0.55);">
+            בקרוב &nbsp;/&nbsp; <span lang="ar" style="font-family:var(--font-arabic)">قريبًا</span>
+          </div>
+
+          <div class="prize-grid">
+            <div class="prize-item">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <h4>תאריך ההגרלה</h4>
+              <p>יוודע בקרוב</p>
+            </div>
+            <div class="prize-item">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M12 12v4"/></svg>
+              <h4>מחיר כרטיס</h4>
+              <p>₪50 לכרטיס</p>
+            </div>
+            <div class="prize-item">
+              <!-- TODO: charity details pending -->
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <h4>תרומה לקהילה</h4>
+              <p lang="ar" style="font-family:var(--font-arabic);font-size:0.72rem">دعم المجتمع</p>
+            </div>
+          </div>
+
+          <!-- Ticket price tag before CTAs -->
+          <div class="price-tag-inline">
+            <span class="pt-he">כרטיס: ₪50</span>
+            <span class="pt-ar" lang="ar">تذكرة: 50 شيكل</span>
+          </div>
+
+          <div class="raffle-btns">
+            <a href="#tickets" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M9 12h6"/></svg>
+              קנו כרטיס עכשיו
+            </a>
+            <a href="#tickets" class="btn btn-ghost">פרטי ההשתתפות</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="luxury-divider"></div>
+
+<!-- ═══════ HOW IT WORKS ═══════ -->
+<section id="how-it-works" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">שקיפות מלאה</span>
+      <h2 class="section-title">איך ההגרלה עובדת</h2>
+      <p class="section-title-ar" lang="ar">كيف يعمل السحب</p>
+    </div>
+
+    <div class="how-grid stagger">
+
+      <!-- Step 1 -->
+      <div class="how-card">
+        <div class="how-step-num">1</div>
+        <div class="how-card-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <path d="M9 12h6M12 9v6"/>
+          </svg>
+        </div>
+        <h3>רוכשים כרטיס</h3>
+        <p class="hc-ar" lang="ar">اشترِ تذكرة</p>
+        <p class="hc-detail-he">כרטיס בעלות ₪50</p>
+        <p class="hc-detail-ar" lang="ar">تذكرة بقيمة 50 شيكل</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="how-card">
+        <div class="how-step-num">2</div>
+        <div class="how-card-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3>ממתינים להגרלה</h3>
+        <p class="hc-ar" lang="ar">انتظر السحب</p>
+        <p class="hc-detail-he">ההגרלה תתקיים בשקיפות מלאה</p>
+        <p class="hc-detail-ar" lang="ar">يتم السحب بشفافية كاملة</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="how-card">
+        <div class="how-step-num">3</div>
+        <div class="how-card-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 9H4a2 2 0 000 4h2"/>
+            <path d="M18 9h2a2 2 0 010 4h-2"/>
+            <path d="M6 3h12v6a6 6 0 01-12 0V3z"/>
+            <path d="M9 21h6M12 15v6"/>
+          </svg>
+        </div>
+        <h3>זוכים ברכב</h3>
+        <p class="hc-ar" lang="ar">اربح السيارة</p>
+        <p class="hc-detail-he">הזוכה מוכרז ומתועד</p>
+        <p class="hc-detail-ar" lang="ar">يُعلن الفائز ويُوثّق</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="luxury-divider"></div>
+
+<!-- ═══════ FORM ═══════ -->
+<section id="tickets" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">הצטרפו לסחב</span>
+      <h2 class="section-title">הצטרפו להגרלה</h2>
+      <p class="section-title-ar" lang="ar">انضم إلى السحب</p>
+      <p style="margin-top:16px;font-size:0.92rem;color:rgba(255,255,255,0.46);max-width:460px;margin-left:auto;margin-right:auto;">הזינו את פרטיכם כדי להירשם להגרלה הבלעדית.</p>
+    </div>
+
+    <div class="form-wrap reveal">
+      <form class="luxury-form" id="raffleForm" novalidate>
+
+        <!-- Ticket price inside form -->
+        <div class="form-price-banner">
+          <p class="fpb-he">כרטיס: ₪50</p>
+          <p class="fpb-ar" lang="ar">تذكرة: 50 شيكل</p>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="fullName">שם מלא</label>
+            <input class="form-input" type="text" id="fullName" name="fullName" placeholder="שמכם המלא" autocomplete="name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="phone">מספר טלפון</label>
+            <input class="form-input" type="tel" id="phone" name="phone" placeholder="+972 50 000 0000" autocomplete="tel" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="city">עיר</label>
+            <input class="form-input" type="text" id="city" name="city" placeholder="עירכם" autocomplete="address-level2" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">אימייל</label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          הצטרפו להגרלה — ₪50 לכרטיס
+        </button>
+
+        <p class="form-note">
+          בלחיצה על הכפתור, אתם מסכימים לתנאי השימוש שלנו.<br>
+          <span lang="ar">جزء من العائدات يُخصَّص للأعمال الخيرية.</span>
+        </p>
+      </form>
+
+      <!-- Trust placeholders strip -->
+      <!-- TODO: raffle end date -->
+      <!-- TODO: legal raffle permit info -->
+      <!-- TODO: charity details — client to confirm % and cause -->
+      <div class="trust-strip">
+        <div class="trust-strip-title">מידע חשוב — יעודכן בקרוב</div>
+        <div class="trust-items">
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span class="trust-placeholder">פרטי הצדקה — יאושרו בקרוב</span>
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span class="trust-placeholder">תאריך סגירת ההגרלה — יקבע בקרוב</span>
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span class="trust-placeholder">אישור משפטי לניהול הגרלה — בהכנה</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="luxury-divider"></div>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section id="contact" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">צרו קשר</span>
+      <h2 class="section-title">צרו קשר</h2>
+      <p class="section-title-ar" lang="ar">تواصل معنا</p>
+    </div>
+
+    <div class="contact-card reveal">
+      <div class="contact-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="contact-lbl">אימייל</div>
+      <div class="contact-val"><a href="mailto:faltee.win@gmail.com">faltee.win@gmail.com</a></div>
+
+      <div class="c-div"></div>
+
+      <div class="contact-coming">
+        <div class="contact-icon-wrap" style="opacity:0.5">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.1 11.05a19.79 19.79 0 01-3.07-8.67A2 2 0 012.01 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="contact-lbl">טלפון</div>
+        <div class="contact-val">בקרוב</div>
+      </div>
+
+      <div class="contact-footnote">
+        נחזור אליכם תוך 24 שעות.
+        <span class="ar-note" lang="ar">نرد خلال 24 ساعة.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-in">
+    <div class="footer-top">
+      <a href="#hero" class="footer-logo">
+        <img src="images/logo.jpeg" alt="Faltee | فلته" class="footer-logo-img">
+      </a>
+      <div class="footer-social">
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.2 8.2 0 004.8 1.53V6.77a4.85 4.85 0 01-1.03-.08z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 פלתי | فلته. כל הזכויות שמורות.</p>
+      <p class="footer-tag" lang="ar">الاستثمار الحقيقي يبدأ بالفرصة</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════ SCRIPTS ═══════ -->
+<script>
+  // ─── CONFIGURATION ───────────────────────────────────────────────────
+  // TODO: client to provide end date — replace the string below with ISO format e.g. "2025-09-01T20:00:00"
+  const RAFFLE_END = "TODO_SET_DATE";
+  // ─────────────────────────────────────────────────────────────────────
+
+  // Nav scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), { passive: true });
+
+  // Mobile nav
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => { mobileNav.classList.add('open'); document.body.style.overflow = 'hidden'; });
+  document.getElementById('mobileClose').addEventListener('click', closeMob);
+  mobileNav.addEventListener('click', e => { if (e.target === mobileNav) closeMob(); });
+  function closeMob() { mobileNav.classList.remove('open'); document.body.style.overflow = ''; }
+
+  // Scroll reveal
+  const revEls = document.querySelectorAll('.reveal, .reveal-l, .reveal-r, .stagger');
+  (() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+    revEls.forEach(el => obs.observe(el));
+  })();
+
+  // Count-up stat numbers — animate 0 → target once, when scrolled into view.
+  // Honors prefers-reduced-motion (leaves the final value untouched).
+  (() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nums = document.querySelectorAll('.count-up');
+    if (reduce || !nums.length) return;
+    const run = (el) => {
+      const target = parseFloat(el.dataset.count) || 0;
+      const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      const dur = 1600, t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min((now - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        el.textContent = pre + Math.round(target * eased) + suf;
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = pre + target + suf;
+      };
+      requestAnimationFrame(step);
+    };
+    const cObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { run(e.target); cObs.unobserve(e.target); } });
+    }, { threshold: 0.4 });
+    nums.forEach(el => {
+      el.textContent = (el.dataset.prefix || '') + '0' + (el.dataset.suffix || '');
+      cObs.observe(el);
+    });
+  })();
+
+  // Countdown — gracefully handles unset RAFFLE_END
+  function setupCountdown() {
+    const boxes   = document.getElementById('cd-boxes');
+    const pending = document.getElementById('cd-pending');
+    const label   = document.getElementById('cd-label');
+
+    // No date set → hide four boxes, show single centred message
+    if (!RAFFLE_END || RAFFLE_END === "TODO_SET_DATE") {
+      boxes.style.display   = 'none';
+      label.style.display   = 'none';
+      pending.style.display = 'block';
+      return;
+    }
+
+    const target = new Date(RAFFLE_END);
+    if (isNaN(target.getTime())) {
+      boxes.style.display   = 'none';
+      pending.style.display = 'block';
+      return;
+    }
+
+    // Valid date — show the four boxes, hide pending message
+    boxes.style.display   = 'grid';
+    pending.style.display = 'none';
+
+    function tick() {
+      const d = target - Date.now();
+      if (d <= 0) {
+        ['cd-d','cd-h','cd-m','cd-s'].forEach(id => { document.getElementById(id).textContent = '00'; });
+        return;
+      }
+      document.getElementById('cd-d').textContent = String(Math.floor(d / 864e5)).padStart(2,'0');
+      document.getElementById('cd-h').textContent = String(Math.floor(d % 864e5 / 36e5)).padStart(2,'0');
+      document.getElementById('cd-m').textContent = String(Math.floor(d % 36e5 / 6e4)).padStart(2,'0');
+      document.getElementById('cd-s').textContent = String(Math.floor(d % 6e4 / 1e3)).padStart(2,'0');
+    }
+    tick(); setInterval(tick, 1000);
+  }
+  setupCountdown();
+
+  // Form
+  document.getElementById('raffleForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const orig = btn.textContent;
+    if (!this.fullName.value.trim() || !this.phone.value.trim() || !this.city.value.trim() || !this.email.value.trim()) {
+      btn.textContent = 'נא למלא את כל השדות.';
+      btn.style.background = 'linear-gradient(135deg,#555,#333)';
+      setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2200);
+      return;
+    }
+    btn.textContent = 'שולח...'; btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = '✓ נרשמתם! ניצור איתכם קשר בקרוב.';
+      btn.style.background = 'linear-gradient(135deg,#16a34a,#15803d)';
+      btn.style.boxShadow = '0 4px 28px rgba(22,163,74,0.42)';
+      setTimeout(() => { btn.textContent = orig; btn.style.background = btn.style.boxShadow = ''; btn.disabled = false; this.reset(); }, 4500);
+    }, 1200);
+  });
+</script>
+<!-- Global accessibility widget (injects skip link, button & panel) -->
+<script src="a11y.js" defer></script>
+</body>
+</html>

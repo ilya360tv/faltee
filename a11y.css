@@ -1,0 +1,206 @@
+/* ════════════════════════════════════════════════════════════════
+   Accessibility widget — global styles
+   - Self-contained, prefixed with .a11y- so it never clashes with the site
+   - Full RTL (Hebrew); panel is dir="rtl"
+   - The html.a11y-* classes are toggled by a11y.js to apply user preferences
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Skip to content ── */
+.a11y-skip {
+  position: fixed;
+  top: 10px; left: 50%;
+  transform: translateX(-50%) translateY(-200%);
+  z-index: 2147483000;
+  background: #C0392B; color: #fff;
+  padding: 12px 24px; border-radius: 8px;
+  font: 600 1rem/1.2 'Heebo', system-ui, sans-serif;
+  text-decoration: none;
+  transition: transform .2s ease-out;
+}
+.a11y-skip:focus {
+  transform: translateX(-50%) translateY(0);
+  outline: 3px solid #fff; outline-offset: 2px;
+}
+
+/* ── Floating button (fixed bottom-right) ── */
+.a11y-fab {
+  position: fixed;
+  bottom: 22px; right: 22px;
+  z-index: 2147482000;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C0392B, #8B0000);
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.28);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+  transition: transform .2s ease-out, box-shadow .2s ease-out;
+}
+.a11y-fab:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(192,57,43,0.55); }
+.a11y-fab:active { transform: translateY(0) scale(0.97); }
+.a11y-fab svg { width: 30px; height: 30px; stroke: #fff; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── Panel ── */
+.a11y-panel {
+  position: fixed;
+  bottom: 90px; right: 22px;
+  z-index: 2147482000;
+  width: 320px; max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: #1A1A1A;
+  border: 1px solid rgba(192,57,43,0.42);
+  border-radius: 16px;
+  padding: 18px 18px 16px;
+  direction: rtl; text-align: right;
+  font-family: 'Heebo', system-ui, sans-serif;
+  color: #fff;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+.a11y-panel[hidden] { display: none; }
+
+.a11y-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.a11y-title { font-size: 1.15rem; font-weight: 700; margin: 0; color: #fff; }
+.a11y-close {
+  width: 40px; height: 40px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 8px; color: #fff; font-size: 1.1rem; line-height: 1; cursor: pointer;
+}
+.a11y-close:hover { background: rgba(192,57,43,0.22); }
+
+.a11y-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+
+.a11y-item {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  min-height: 48px; padding: 12px 14px; margin-bottom: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: #fff; font-family: inherit; font-size: 0.95rem; text-align: right;
+  cursor: pointer; text-decoration: none;
+  transition: background .15s ease-out, border-color .15s ease-out;
+}
+.a11y-group .a11y-item { margin-bottom: 0; justify-content: center; gap: 6px; }
+.a11y-item:hover { background: rgba(192,57,43,0.18); border-color: rgba(192,57,43,0.5); }
+.a11y-item[aria-pressed="true"] { background: rgba(192,57,43,0.32); border-color: #C0392B; }
+.a11y-item .a11y-ico { font-size: 1.05rem; line-height: 1; flex-shrink: 0; width: 22px; text-align: center; }
+.a11y-item[aria-pressed="true"] .a11y-state::after { content: " ✓"; }
+
+.a11y-reset { justify-content: center; margin-top: 4px; background: rgba(255,255,255,0.03); }
+.a11y-statement { justify-content: center; background: transparent; border-style: dashed; }
+.a11y-statement:hover { background: rgba(255,255,255,0.05); }
+
+.a11y-note {
+  margin: 12px 2px 0; font-size: 0.72rem; line-height: 1.6;
+  color: rgba(255,255,255,0.5);
+}
+
+/* Strong, always-on focus ring for the widget itself */
+.a11y-fab:focus-visible,
+.a11y-panel button:focus-visible,
+.a11y-panel a:focus-visible,
+.a11y-skip:focus-visible {
+  outline: 3px solid #fff !important;
+  outline-offset: 2px !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   USER PREFERENCE CLASSES (toggled on <html>)
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Underline links ── */
+html.a11y-underline a { text-decoration: underline !important; }
+
+/* ── Readable font (sans that renders Hebrew + Arabic clearly) ── */
+html.a11y-readable-font,
+html.a11y-readable-font * {
+  font-family: Arial, "Segoe UI", Tahoma, sans-serif !important;
+  letter-spacing: normal !important;
+}
+
+/* ── Reduce motion (manual toggle, mirrors prefers-reduced-motion) ── */
+html.a11y-reduce-motion *,
+html.a11y-reduce-motion *::before,
+html.a11y-reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+html.a11y-reduce-motion .reveal,
+html.a11y-reduce-motion .reveal-l,
+html.a11y-reduce-motion .reveal-r,
+html.a11y-reduce-motion .stagger > * {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ── Keyboard focus highlight (strong ring on keyboard navigation) ── */
+html.a11y-focus a:focus-visible,
+html.a11y-focus button:focus-visible,
+html.a11y-focus input:focus-visible,
+html.a11y-focus textarea:focus-visible,
+html.a11y-focus select:focus-visible,
+html.a11y-focus [tabindex]:focus-visible {
+  outline: 3px solid #FFD400 !important;
+  outline-offset: 2px !important;
+  border-radius: 2px;
+}
+
+/* ── High contrast ── */
+html.a11y-contrast * {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #fff !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+}
+html.a11y-contrast,
+html.a11y-contrast body,
+html.a11y-contrast section,
+html.a11y-contrast nav,
+html.a11y-contrast footer,
+html.a11y-contrast .stats-strip,
+html.a11y-contrast .raffle-card,
+html.a11y-contrast .raffle-card-inner,
+html.a11y-contrast .car-stage,
+html.a11y-contrast .profile-card,
+html.a11y-contrast .how-card,
+html.a11y-contrast .luxury-form,
+html.a11y-contrast .contact-card,
+html.a11y-contrast .cd-item,
+html.a11y-contrast .prize-item,
+html.a11y-contrast .trust-item,
+html.a11y-contrast .urgency-banner,
+html.a11y-contrast .form-price-banner,
+html.a11y-contrast .price-tag-inline,
+html.a11y-contrast .hero-badge,
+html.a11y-contrast .mobile-nav { background: #000 !important; }
+html.a11y-contrast a,
+html.a11y-contrast .nav-cta,
+html.a11y-contrast .section-label { color: #FFD400 !important; -webkit-text-fill-color: #FFD400 !important; }
+html.a11y-contrast .btn,
+html.a11y-contrast .btn-submit,
+html.a11y-contrast .nav-cta {
+  background: #000 !important; color: #FFD400 !important;
+  -webkit-text-fill-color: #FFD400 !important; border: 2px solid #FFD400 !important;
+}
+html.a11y-contrast input,
+html.a11y-contrast textarea { background: #000 !important; border: 1px solid #fff !important; }
+html.a11y-contrast .hero-img { display: none !important; }
+html.a11y-contrast nav.scrolled { background: #000 !important; }
+/* Keep the widget itself visible & high-contrast */
+html.a11y-contrast .a11y-fab { background: #000 !important; border: 2px solid #FFD400 !important; }
+html.a11y-contrast .a11y-fab svg { stroke: #FFD400 !important; }
+html.a11y-contrast .a11y-panel { background: #000 !important; border: 2px solid #fff !important; }
+html.a11y-contrast .a11y-item { background: #000 !important; border: 1px solid #fff !important; }
+html.a11y-contrast .a11y-item[aria-pressed="true"] { background: #333 !important; border-color: #FFD400 !important; }
+html.a11y-contrast .a11y-skip { background: #000 !important; border: 2px solid #FFD400 !important; color: #FFD400 !important; }
+
+/* Respect the OS-level reduce-motion for the widget's own transitions */
+@media (prefers-reduced-motion: reduce) {
+  .a11y-fab, .a11y-skip, .a11y-item { transition: none !important; }
+}
