@@ -77,7 +77,9 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       padding: 12px 64px;
-      display: flex; justify-content: space-between; align-items: center;
+      /* 3-column header: logo on its side, nav links centered as a group, CTA on
+         the opposite side. RTL → col 1 is rightmost, so logo sits right, CTA left. */
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
       min-height: 88px;
       transition: background var(--t-slow), backdrop-filter var(--t-slow);
     }
@@ -86,9 +88,9 @@
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--glass-border);
     }
-    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; justify-self: start; }
     .nav-logo-img { height: 66px; width: auto; display: block; }
-    .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; white-space: nowrap; }
+    .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; white-space: nowrap; justify-self: center; }
     .nav-links a {
       color: rgba(255,255,255,0.75); text-decoration: none;
       font-size: 0.88rem; font-weight: 500; letter-spacing: 0;
@@ -96,6 +98,7 @@
     }
     .nav-links a:hover { color: var(--red); }
     .nav-cta {
+      justify-self: end; text-decoration: none; font-size: 0.88rem; font-weight: 500;
       background: linear-gradient(135deg, var(--red), var(--red-deep)) !important;
       color: var(--white) !important; padding: 11px 26px; border-radius: var(--radius-sm);
       transition: transform var(--t-med), box-shadow var(--t-med) !important;
@@ -421,7 +424,7 @@
     }
     .raffle-live::before { content:''; width:8px; height:8px; flex-shrink:0; border-radius:50%; background:var(--red); animation:pulsedot 2s ease-in-out infinite; }
 
-    /* Urgency banner above countdown */
+    /* Urgency banner above the closing-date statement */
     .urgency-banner {
       background: linear-gradient(135deg, rgba(139,0,0,0.38), rgba(192,57,43,0.22));
       border: 1px solid rgba(192,57,43,0.42);
@@ -431,11 +434,20 @@
     .urgency-banner .urg-he { font-size: 0.95rem; font-weight: 700; color: rgba(255,255,255,0.92); margin-bottom: 4px; }
     .urgency-banner .urg-ar { font-family: var(--font-arabic); direction: rtl; font-size: 0.85rem; color: rgba(255,255,255,0.55); }
 
-    .countdown-label-row { font-size: 0.72rem; letter-spacing: 0.06em; color: rgba(255,255,255,0.38); margin-bottom: 12px; }
-    .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 36px; }
-    .cd-item { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 20px 12px; text-align: center; }
-    .cd-num { font-family: var(--font-heading); font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 6px; letter-spacing: 0; font-variant-numeric: tabular-nums lining-nums; }
-    .cd-unit { font-size: 0.7rem; letter-spacing: 0; color: rgba(255,255,255,0.38); }
+    /* Prominent registration closing-date statement (replaces the countdown) */
+    .closing-date {
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      text-align: center; margin-bottom: 36px; padding: 24px 24px;
+      background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md);
+    }
+    .closing-date::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
+    }
+    .closing-date-icon { width: 26px; height: 26px; stroke: var(--red); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .closing-date-he { display: block; font-family: var(--font-heading); font-size: 1.55rem; font-weight: 700; color: var(--white); line-height: 1.2; letter-spacing: 0; }
+    .closing-date-ar { display: block; font-family: var(--font-arabic); direction: rtl; font-size: 1.05rem; color: rgba(255,255,255,0.6); margin-top: 6px; }
 
     .prize-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 28px; }
     .prize-item { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 20px; text-align: center; }
@@ -663,7 +675,10 @@
     }
     @media (max-width: 768px) {
       .section-pad { padding: 72px 20px; }
+      /* Mobile header keeps the original flex layout (logo + hamburger only) */
+      nav { display: flex; justify-content: space-between; }
       .nav-links { display: none; }
+      .nav-cta { display: none; }
       html { scroll-padding-top: 86px; }
       /* order:-1 → first flex item, which in RTL sits at the RIGHT edge.
          Logo (order 0) drops to the left. */
@@ -682,7 +697,6 @@
       /* Gentler reveal on mobile: shorter rise, no sideways motion (avoids any
          horizontal shift on small screens) */
       .reveal, .reveal-l, .reveal-r { transform: translateY(20px); }
-      .countdown { grid-template-columns: repeat(2, 1fr); }
       .prize-grid { grid-template-columns: 1fr 1fr; }
       .raffle-btns { flex-direction: column; }
       .raffle-btns .btn { justify-content: center; }
@@ -699,9 +713,6 @@
       /* Keep the prize badge compact so it never crowds the car photo */
       .car-prize-badge { top: 14px; right: 14px; padding: 9px 14px; }
       .car-prize-badge .badge-value { font-size: 1.05rem; }
-      /* Countdown stays a comfortable 2×2 on phones */
-      .countdown { gap: 10px; }
-      .cd-num { font-size: 1.65rem; }
       .raffle-car-name { font-size: 1.6rem; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -734,8 +745,8 @@
     <li><a href="#about">אודות</a></li>
     <li><a href="#tickets">כרטיסים</a></li>
     <li><a href="#contact">צור קשר</a></li>
-    <li><a href="#tickets" class="nav-cta">קנו כרטיס</a></li>
   </ul>
+  <a href="#tickets" class="nav-cta">קנו כרטיס</a>
   <button class="hamburger" id="hamburger" aria-label="פתח תפריט">
     <span></span><span></span><span></span>
   </button>
@@ -892,29 +903,20 @@
 
           <!-- Urgency banner -->
           <div class="urgency-banner">
-            <p class="urg-he">ההרשמה להגרלה תיסגר ב-8 בספטמבר</p>
-            <p class="urg-ar" lang="ar">التسجيل في السحب يُغلق في 8 سبتمبر</p>
+            <p class="urg-he">אל תפספסו את ההזדמנות</p>
+            <p class="urg-ar" lang="ar">لا تفوّت الفرصة</p>
           </div>
 
-          <div class="countdown-label-row" id="cd-label">ההגרלה נסגרת בעוד</div>
-          <!-- live countdown to RAFFLE_END -->
-          <div class="countdown" id="cd-boxes">
-            <div class="cd-item"><div class="cd-num" id="cd-d">--</div><div class="cd-unit">ימים <span lang="ar" style="font-family:var(--font-arabic)">/ أيام</span></div></div>
-            <div class="cd-item"><div class="cd-num" id="cd-h">--</div><div class="cd-unit">שעות <span lang="ar" style="font-family:var(--font-arabic)">/ ساعات</span></div></div>
-            <div class="cd-item"><div class="cd-num" id="cd-m">--</div><div class="cd-unit">דקות <span lang="ar" style="font-family:var(--font-arabic)">/ دقائق</span></div></div>
-            <div class="cd-item"><div class="cd-num" id="cd-s">--</div><div class="cd-unit">שניות <span lang="ar" style="font-family:var(--font-arabic)">/ ثوانٍ</span></div></div>
-          </div>
-          <!-- shown when the countdown reaches zero (raffle closed) -->
-          <div id="cd-closed" style="display:none;text-align:center;padding:24px 0 32px;font-size:1.3rem;font-weight:700;color:var(--white);">
-            ההגרלה נסגרה &nbsp;/&nbsp; <span lang="ar" style="font-family:var(--font-arabic)">انتهى السحب</span>
-          </div>
-
-          <div class="prize-grid">
-            <div class="prize-item">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              <h4>תאריך ההגרלה</h4>
-              <p>יוודע בקרוב</p>
+          <!-- Registration closing date -->
+          <div class="closing-date">
+            <svg class="closing-date-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <div>
+              <span class="closing-date-he">הרישום ייסגר ב-8 בספטמבר 2026</span>
+              <span class="closing-date-ar" lang="ar">يُغلق التسجيل في 8 سبتمبر 2026</span>
             </div>
+          </div>
+
+          <div class="prize-grid" style="grid-template-columns:1fr">
             <div class="prize-item">
               <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M12 12v4"/></svg>
               <h4>מחיר כרטיס</h4>
@@ -1157,11 +1159,6 @@
 
 <!-- ═══════ SCRIPTS ═══════ -->
 <script>
-  // ─── CONFIGURATION ───────────────────────────────────────────────────
-  // Raffle registration closes at this exact local date/time.
-  const RAFFLE_END = "2026-09-08T23:59:00";
-  // ─────────────────────────────────────────────────────────────────────
-
   // Nav scroll
   const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), { passive: true });
@@ -1232,39 +1229,6 @@
       cObs.observe(el);
     });
   })();
-
-  // Countdown — counts down live to RAFFLE_END, then shows a closed message
-  function setupCountdown() {
-    const boxes  = document.getElementById('cd-boxes');
-    const closed = document.getElementById('cd-closed');
-    const label  = document.getElementById('cd-label');
-    const target = new Date(RAFFLE_END);
-
-    // Switch the UI into the "raffle closed" state (no negative numbers)
-    function showClosed() {
-      boxes.style.display  = 'none';
-      label.style.display  = 'none';
-      closed.style.display = 'block';
-    }
-
-    if (isNaN(target.getTime())) { showClosed(); return; }
-
-    let timer;
-    function tick() {
-      const d = target - Date.now();
-      if (d <= 0) {
-        showClosed();
-        clearInterval(timer);
-        return;
-      }
-      document.getElementById('cd-d').textContent = String(Math.floor(d / 864e5)).padStart(2,'0');
-      document.getElementById('cd-h').textContent = String(Math.floor(d % 864e5 / 36e5)).padStart(2,'0');
-      document.getElementById('cd-m').textContent = String(Math.floor(d % 36e5 / 6e4)).padStart(2,'0');
-      document.getElementById('cd-s').textContent = String(Math.floor(d % 6e4 / 1e3)).padStart(2,'0');
-    }
-    tick(); timer = setInterval(tick, 1000);
-  }
-  setupCountdown();
 
   // Form — inline per-field validation, errors below each field, screen-reader
   // status via aria-live, and focus moved to the first invalid field on submit.
