@@ -457,13 +457,13 @@
 
     /* Price tag near CTAs */
     .price-tag-inline {
-      display: inline-flex; align-items: center; gap: 10px;
+      display: flex; width: fit-content; align-items: center; gap: 10px;
       background: rgba(192,57,43,0.16); border: 1px solid rgba(192,57,43,0.38);
-      border-radius: var(--radius-sm); padding: 10px 18px; margin-bottom: 20px;
+      border-radius: var(--radius-sm); padding: 10px 18px; margin: 0 auto 20px;
     }
     .price-tag-inline .pt-he { font-size: 1.05rem; font-weight: 700; color: var(--white); }
     .price-tag-inline .pt-ar { font-family: var(--font-arabic); font-size: 0.9rem; color: rgba(255,255,255,0.58); }
-    .raffle-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .raffle-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 
     /* ── HOW IT WORKS ── */
     #how-it-works {
