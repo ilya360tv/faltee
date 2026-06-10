@@ -892,21 +892,21 @@
 
           <!-- Urgency banner -->
           <div class="urgency-banner">
-            <p class="urg-he">ההגרלה תיסגר בקרוב — אל תפספסו</p>
-            <p class="urg-ar" lang="ar">السحب سيُغلق قريبًا — لا تفوّت الفرصة</p>
+            <p class="urg-he">ההרשמה להגרלה תיסגר ב-8 בספטמבר</p>
+            <p class="urg-ar" lang="ar">التسجيل في السحب يُغلق في 8 سبتمبر</p>
           </div>
 
           <div class="countdown-label-row" id="cd-label">ההגרלה נסגרת בעוד</div>
-          <!-- shown when RAFFLE_END is set -->
+          <!-- live countdown to RAFFLE_END -->
           <div class="countdown" id="cd-boxes">
-            <div class="cd-item"><div class="cd-num" id="cd-d">--</div><div class="cd-unit">ימים</div></div>
-            <div class="cd-item"><div class="cd-num" id="cd-h">--</div><div class="cd-unit">שעות</div></div>
-            <div class="cd-item"><div class="cd-num" id="cd-m">--</div><div class="cd-unit">דקות</div></div>
-            <div class="cd-item"><div class="cd-num" id="cd-s">--</div><div class="cd-unit">שניות</div></div>
+            <div class="cd-item"><div class="cd-num" id="cd-d">--</div><div class="cd-unit">ימים <span lang="ar" style="font-family:var(--font-arabic)">/ أيام</span></div></div>
+            <div class="cd-item"><div class="cd-num" id="cd-h">--</div><div class="cd-unit">שעות <span lang="ar" style="font-family:var(--font-arabic)">/ ساعات</span></div></div>
+            <div class="cd-item"><div class="cd-num" id="cd-m">--</div><div class="cd-unit">דקות <span lang="ar" style="font-family:var(--font-arabic)">/ دقائق</span></div></div>
+            <div class="cd-item"><div class="cd-num" id="cd-s">--</div><div class="cd-unit">שניות <span lang="ar" style="font-family:var(--font-arabic)">/ ثوانٍ</span></div></div>
           </div>
-          <!-- shown when no date is set -->
-          <div id="cd-pending" style="display:none;text-align:center;padding:24px 0 32px;font-size:1.15rem;font-weight:600;color:rgba(255,255,255,0.55);">
-            בקרוב &nbsp;/&nbsp; <span lang="ar" style="font-family:var(--font-arabic)">قريبًا</span>
+          <!-- shown when the countdown reaches zero (raffle closed) -->
+          <div id="cd-closed" style="display:none;text-align:center;padding:24px 0 32px;font-size:1.3rem;font-weight:700;color:var(--white);">
+            ההגרלה נסגרה &nbsp;/&nbsp; <span lang="ar" style="font-family:var(--font-arabic)">انتهى السحب</span>
           </div>
 
           <div class="prize-grid">
@@ -1158,8 +1158,8 @@
 <!-- ═══════ SCRIPTS ═══════ -->
 <script>
   // ─── CONFIGURATION ───────────────────────────────────────────────────
-  // TODO: client to provide end date — replace the string below with ISO format e.g. "2025-09-01T20:00:00"
-  const RAFFLE_END = "TODO_SET_DATE";
+  // Raffle registration closes at this exact local date/time.
+  const RAFFLE_END = "2026-09-08T23:59:00";
   // ─────────────────────────────────────────────────────────────────────
 
   // Nav scroll
@@ -1233,35 +1233,28 @@
     });
   })();
 
-  // Countdown — gracefully handles unset RAFFLE_END
+  // Countdown — counts down live to RAFFLE_END, then shows a closed message
   function setupCountdown() {
-    const boxes   = document.getElementById('cd-boxes');
-    const pending = document.getElementById('cd-pending');
-    const label   = document.getElementById('cd-label');
-
-    // No date set → hide four boxes, show single centred message
-    if (!RAFFLE_END || RAFFLE_END === "TODO_SET_DATE") {
-      boxes.style.display   = 'none';
-      label.style.display   = 'none';
-      pending.style.display = 'block';
-      return;
-    }
-
+    const boxes  = document.getElementById('cd-boxes');
+    const closed = document.getElementById('cd-closed');
+    const label  = document.getElementById('cd-label');
     const target = new Date(RAFFLE_END);
-    if (isNaN(target.getTime())) {
-      boxes.style.display   = 'none';
-      pending.style.display = 'block';
-      return;
+
+    // Switch the UI into the "raffle closed" state (no negative numbers)
+    function showClosed() {
+      boxes.style.display  = 'none';
+      label.style.display  = 'none';
+      closed.style.display = 'block';
     }
 
-    // Valid date — show the four boxes, hide pending message
-    boxes.style.display   = 'grid';
-    pending.style.display = 'none';
+    if (isNaN(target.getTime())) { showClosed(); return; }
 
+    let timer;
     function tick() {
       const d = target - Date.now();
       if (d <= 0) {
-        ['cd-d','cd-h','cd-m','cd-s'].forEach(id => { document.getElementById(id).textContent = '00'; });
+        showClosed();
+        clearInterval(timer);
         return;
       }
       document.getElementById('cd-d').textContent = String(Math.floor(d / 864e5)).padStart(2,'0');
@@ -1269,7 +1262,7 @@
       document.getElementById('cd-m').textContent = String(Math.floor(d % 36e5 / 6e4)).padStart(2,'0');
       document.getElementById('cd-s').textContent = String(Math.floor(d % 6e4 / 1e3)).padStart(2,'0');
     }
-    tick(); setInterval(tick, 1000);
+    tick(); timer = setInterval(tick, 1000);
   }
   setupCountdown();
 
