@@ -1281,19 +1281,35 @@
       }
 
       status.textContent = ''; status.className = 'form-status';
-      btn.textContent = 'שולח...'; btn.disabled = true;
+
+      // Build the pre-filled WhatsApp message from the user's details.
+      // fields order is [fullName, phone, city, email].
+      const [name, phone, city, email] = fields.map(f => f.value.trim());
+      const message =
+        'שלום, אני רוצה להצטרף להגרלת ה-BMW 320 M3 Kit!\n' +
+        'שם מלא: ' + name + '\n' +
+        'טלפון: ' + phone + '\n' +
+        'עיר: ' + city + '\n' +
+        'אימייל: ' + email;
+      // encodeURIComponent handles the Hebrew text and the \n line breaks (→ %0A).
+      const waUrl = 'https://wa.me/972535950438?text=' + encodeURIComponent(message);
+
+      // Open synchronously (inside the click gesture) so popup blockers allow it.
+      // wa.me opens the WhatsApp app on mobile and WhatsApp Web on desktop.
+      window.open(waUrl, '_blank', 'noopener');
+
+      // On-page success state
+      btn.textContent = '✓ נפתח וואטסאפ';
+      btn.style.background = 'linear-gradient(135deg,#16a34a,#15803d)';
+      btn.style.boxShadow = '0 4px 28px rgba(22,163,74,0.42)';
+      btn.disabled = true;
+      status.textContent = 'מעולה! נפתח וואטסאפ — לחצו שלח כדי להשלים את ההרשמה.';
+      status.className = 'form-status is-success';
       setTimeout(() => {
-        btn.textContent = '✓ נרשמתם! ניצור איתכם קשר בקרוב.';
-        btn.style.background = 'linear-gradient(135deg,#16a34a,#15803d)';
-        btn.style.boxShadow = '0 4px 28px rgba(22,163,74,0.42)';
-        status.textContent = 'נרשמתם בהצלחה! ניצור איתכם קשר בקרוב.';
-        status.className = 'form-status is-success';
-        setTimeout(() => {
-          btn.textContent = orig; btn.style.background = btn.style.boxShadow = ''; btn.disabled = false;
-          status.textContent = ''; status.className = 'form-status';
-          form.reset();
-        }, 4500);
-      }, 1200);
+        btn.textContent = orig; btn.style.background = btn.style.boxShadow = ''; btn.disabled = false;
+        status.textContent = ''; status.className = 'form-status';
+        form.reset();
+      }, 6000);
     });
   })();
 </script>
