@@ -592,6 +592,55 @@
     .form-status.is-error   { color: #F1948A; }
     .form-status.is-success { color: #5DD39E; }
 
+    /* Form gently fades + shrinks away before the thank-you screen appears */
+    .luxury-form.is-leaving { opacity: 0; transform: scale(0.98); transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none; }
+
+    /* ── PREMIUM THANK-YOU SCREEN ── */
+    .thank-you {
+      position: relative; overflow: hidden; text-align: center;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl); padding: 56px 52px;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 28px 70px rgba(0,0,0,0.5), 0 0 70px rgba(139,0,0,0.12);
+      animation: thankIn 0.7s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .thank-you::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--red-deep),var(--red),var(--burgundy-light)); }
+    @keyframes thankIn { from { opacity: 0; transform: translateY(18px) scale(0.95); } to { opacity: 1; transform: none; } }
+    /* Faint rose watermark echoing the brand motif */
+    .thank-you-motif { position: absolute; top: -64px; left: -64px; width: 300px; height: 300px; color: var(--burgundy); opacity: 0.07; pointer-events: none; transform: rotate(-10deg); }
+    .thank-you-motif svg { display: block; width: 100%; height: 100%; }
+    .thank-you-inner { position: relative; z-index: 1; }
+    /* Glowing rose emblem */
+    .thank-you-badge {
+      width: 78px; height: 78px; margin: 0 auto 26px;
+      display: flex; align-items: center; justify-content: center; border-radius: 50%;
+      background: radial-gradient(circle at 50% 35%, rgba(192,57,43,0.38), rgba(109,15,15,0.16));
+      border: 1px solid rgba(192,57,43,0.48); box-shadow: 0 0 40px rgba(192,57,43,0.40);
+      animation: badgeGlow 3.6s ease-in-out infinite;
+    }
+    .thank-you-badge svg { width: 42px; height: 42px; color: #fff; }
+    .thank-you-title { font-family: var(--font-heading); font-size: clamp(1.7rem, 3.4vw, 2.5rem); font-weight: 900; color: var(--white); line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .thank-you-title-ar { font-family: var(--font-arabic); direction: rtl; font-size: clamp(1.05rem, 2vw, 1.4rem); color: rgba(255,255,255,0.55); margin-bottom: 22px; }
+    .thank-you-msg { font-size: 1rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
+    .thank-you-msg-ar { font-family: var(--font-arabic); direction: rtl; font-size: 0.9rem; color: rgba(255,255,255,0.45); margin-top: 4px; }
+    /* Share-with-friends section */
+    .share-box { margin-top: 38px; padding-top: 32px; border-top: 1px solid var(--glass-border); }
+    .share-title { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 20px; }
+    .share-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .share-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      min-height: 48px; padding: 13px 26px; border-radius: var(--radius-sm);
+      font-size: 0.92rem; font-weight: 600; text-decoration: none; cursor: pointer;
+      border: 1px solid transparent; transition: transform var(--t-med), box-shadow var(--t-med), background var(--t-med), border-color var(--t-med);
+    }
+    .share-btn svg { width: 19px; height: 19px; flex-shrink: 0; }
+    .share-btn--wa { background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; box-shadow: 0 6px 26px rgba(37,211,102,0.32); }
+    .share-btn--wa:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(37,211,102,0.46); }
+    .share-btn--copy { background: var(--glass-bg); border-color: var(--glass-border); color: var(--white); }
+    .share-btn--copy:hover { transform: translateY(-2px); border-color: rgba(192,57,43,0.5); background: var(--glass-red); }
+    .copy-feedback { display: block; margin-top: 16px; font-size: 0.85rem; font-weight: 600; color: #5DD39E; opacity: 0; transform: translateY(-4px); transition: opacity .3s ease, transform .3s ease; }
+    .copy-feedback.show { opacity: 1; transform: none; }
+
     /* Trust strip below the form */
     .trust-strip {
       max-width: 660px; margin: 24px auto 0;
@@ -692,6 +741,9 @@
       .stat-item { padding: 16px; }
       .form-row { grid-template-columns: 1fr; }
       .luxury-form { padding: 40px 26px; }
+      .thank-you { padding: 40px 26px; }
+      .share-btns { flex-direction: column; }
+      .share-btn { width: 100%; }
       .raffle-body { padding: 28px 24px; }
       .car-stage { padding: 20px 18px 24px; }
       /* Gentler reveal on mobile: shorter rise, no sideways motion (avoids any
@@ -725,6 +777,7 @@
       .hero-badge-dot,.raffle-live::before,.raffle-card::after { animation:none; }
       /* New motion effects off too */
       .car-prize-badge { animation:none !important; }
+      .thank-you, .thank-you-badge { animation:none !important; }
       .car-stage:hover .car-stage-img { transform:none !important; }
       .zoom-in { opacity:1 !important; transform:none !important; transition:none !important; }
       .btn::after, .btn-submit::after { opacity:0 !important; animation:none !important; }
@@ -1072,6 +1125,54 @@
         </p>
       </form>
 
+      <!-- Premium thank-you screen (revealed after a successful submit) -->
+      <div class="thank-you" id="thankYou" hidden>
+        <div class="thank-you-motif" aria-hidden="true">
+          <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M100 100 C 72 74, 80 30, 100 22 C 120 30, 128 74, 100 100 Z"/>
+            <path d="M100 100 C 72 74, 80 30, 100 22 C 120 30, 128 74, 100 100 Z" transform="rotate(45 100 100)"/>
+            <path d="M100 100 C 72 74, 80 30, 100 22 C 120 30, 128 74, 100 100 Z" transform="rotate(90 100 100)"/>
+            <path d="M100 100 C 72 74, 80 30, 100 22 C 120 30, 128 74, 100 100 Z" transform="rotate(135 100 100)"/>
+            <path d="M100 100 C 72 74, 80 30, 100 22 C 120 30, 128 74, 100 100 Z" transform="rotate(180 100 100)"/>
+            <path d="M100 100 C 72 74, 80 30, 100 22 C 120 30, 128 74, 100 100 Z" transform="rotate(225 100 100)"/>
+            <path d="M100 100 C 72 74, 80 30, 100 22 C 120 30, 128 74, 100 100 Z" transform="rotate(270 100 100)"/>
+            <path d="M100 100 C 72 74, 80 30, 100 22 C 120 30, 128 74, 100 100 Z" transform="rotate(315 100 100)"/>
+            <circle cx="100" cy="100" r="19"/>
+          </svg>
+        </div>
+        <div class="thank-you-inner">
+          <div class="thank-you-badge" aria-hidden="true">
+            <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="9" stroke-linejoin="round">
+              <path d="M100 100 C 78 80, 84 44, 100 38 C 116 44, 122 80, 100 100 Z"/>
+              <path d="M100 100 C 78 80, 84 44, 100 38 C 116 44, 122 80, 100 100 Z" transform="rotate(72 100 100)"/>
+              <path d="M100 100 C 78 80, 84 44, 100 38 C 116 44, 122 80, 100 100 Z" transform="rotate(144 100 100)"/>
+              <path d="M100 100 C 78 80, 84 44, 100 38 C 116 44, 122 80, 100 100 Z" transform="rotate(216 100 100)"/>
+              <path d="M100 100 C 78 80, 84 44, 100 38 C 116 44, 122 80, 100 100 Z" transform="rotate(288 100 100)"/>
+              <circle cx="100" cy="100" r="15"/>
+            </svg>
+          </div>
+          <h2 class="thank-you-title">תודה שנרשמת להגרלה! 🎉</h2>
+          <p class="thank-you-title-ar" lang="ar">شكرًا لتسجيلك في السحب!</p>
+          <p class="thank-you-msg">פרטיך נשלחו בהצלחה. בהצלחה בהגרלה!</p>
+          <p class="thank-you-msg-ar" lang="ar">تم إرسال تفاصيلك بنجاح. حظًا موفقًا!</p>
+
+          <div class="share-box">
+            <h3 class="share-title">שתפו חברים והגדילו את הקהילה</h3>
+            <div class="share-btns">
+              <a class="share-btn share-btn--wa" id="shareWa" href="#" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.413c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                שתפו בוואטסאפ
+              </a>
+              <button class="share-btn share-btn--copy" id="copyLink" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                <span class="copy-label">העתק קישור</span>
+              </button>
+            </div>
+            <span class="copy-feedback" id="copyFeedback" role="status">הקישור הועתק!</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Trust placeholders strip -->
       <!-- TODO: raffle end date -->
       <!-- TODO: legal raffle permit info -->
@@ -1298,18 +1399,43 @@
       // wa.me opens the WhatsApp app on mobile and WhatsApp Web on desktop.
       window.open(waUrl, '_blank', 'noopener');
 
-      // On-page success state
-      btn.textContent = '✓ נפתח וואטסאפ';
-      btn.style.background = 'linear-gradient(135deg,#16a34a,#15803d)';
-      btn.style.boxShadow = '0 4px 28px rgba(22,163,74,0.42)';
+      // Fade the form out, then reveal the premium thank-you screen in its place.
       btn.disabled = true;
-      status.textContent = 'מעולה! נפתח וואטסאפ — לחצו שלח כדי להשלים את ההרשמה.';
-      status.className = 'form-status is-success';
+      form.classList.add('is-leaving');
       setTimeout(() => {
-        btn.textContent = orig; btn.style.background = btn.style.boxShadow = ''; btn.disabled = false;
-        status.textContent = ''; status.className = 'form-status';
-        form.reset();
-      }, 6000);
+        form.style.display = 'none';
+        thankYou.hidden = false;
+        thankYou.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 420);
+    });
+
+    // ── Thank-you share actions ──
+    const SITE_URL  = 'https://faltee.com';
+    const thankYou  = document.getElementById('thankYou');
+    const shareWa   = document.getElementById('shareWa');
+    const copyBtn   = document.getElementById('copyLink');
+
+    // Pre-fill the "share with friends" WhatsApp message (encoded for Hebrew + link).
+    const shareMsg = '🚗 גלו את הגרלת ה-BMW 320 של Faltee! הצטרפו עכשיו: ' + SITE_URL;
+    shareWa.href = 'https://wa.me/?text=' + encodeURIComponent(shareMsg);
+
+    // Copy the site link to the clipboard, with a graceful fallback + confirmation.
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(SITE_URL);
+      } catch (_) {
+        const ta = document.createElement('textarea');
+        ta.value = SITE_URL; ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute'; ta.style.left = '-9999px';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+      const fb = document.getElementById('copyFeedback');
+      fb.classList.add('show');
+      const label = copyBtn.querySelector('.copy-label');
+      label.textContent = 'הקישור הועתק!';
+      setTimeout(() => { fb.classList.remove('show'); label.textContent = 'העתק קישור'; }, 2500);
     });
   })();
 </script>
